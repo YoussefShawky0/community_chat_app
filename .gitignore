@@ -43,6 +43,13 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
+*.dart linguist-language=Dart
+*.kt linguist-language=Kotlin
+*.java linguist-language=Java
+*.cpp linguist-language=Ignore
+*.h linguist-language=Ignore
+*.c linguist-language=Ignore
+android/** linguist-vendored
+ios/** linguist-vendored
