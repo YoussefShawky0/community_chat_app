@@ -1,0 +1,8 @@
+# Ignore native files and generated files from linguist stats
+android/** linguist-vendored
+ios/** linguist-vendored
+build/** linguist-generated
+*.gradle linguist-vendored
+*.pbxproj linguist-vendored
+*.xcworkspace linguist-vendored
+*.xcconfig linguist-vendored
