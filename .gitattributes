@@ -6,3 +6,4 @@ build/** linguist-generated
 *.pbxproj linguist-vendored
 *.xcworkspace linguist-vendored
 *.xcconfig linguist-vendored
+*.dart linguist-language=Dart

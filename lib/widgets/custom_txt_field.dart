@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key, this.hintText, this.labelText});
+  const CustomTextField({
+    super.key,
+    this.hintText,
+    this.labelText,
+    this.onChanged,
+  });
   final String? hintText;
   final String? labelText;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your $labelText';
+        }
+        return null;
+      },
+      onChanged: onChanged,
       style: TextStyle(color: Colors.white),
       obscureText: labelText == 'Password' ? true : false,
       decoration: InputDecoration(
