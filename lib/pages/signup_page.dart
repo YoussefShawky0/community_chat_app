@@ -1,4 +1,5 @@
 import 'package:chat_app/constants.dart';
+import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_txt_field.dart';
 import 'package:chat_app/widgets/info_title.dart';
@@ -16,11 +17,8 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   String? email;
-
   String? password;
-
   bool isLoading = false;
-
   GlobalKey<FormState> formKey = GlobalKey();
 
   @override
@@ -57,7 +55,7 @@ class _SignupPageState extends State<SignupPage> {
                 const SizedBox(height: 70),
                 InfoTitle(title: 'Create Account'),
                 const SizedBox(height: 15),
-                CustomTextField(
+                CustomFormTextField(
                   hintText: 'Enter your email',
                   labelText: 'Email',
                   onChanged: (value) {
@@ -65,7 +63,7 @@ class _SignupPageState extends State<SignupPage> {
                   },
                 ),
                 const SizedBox(height: 20),
-                CustomTextField(
+                CustomFormTextField(
                   hintText: 'Create password',
                   labelText: 'Password',
                   onChanged: (value) {
@@ -77,31 +75,7 @@ class _SignupPageState extends State<SignupPage> {
                   text: 'Sign Up',
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      try {
-                        isLoading = true;
-                      setState(() {});
-                        await signupUser();
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'weak-password') {
-                          showSnackBar(context, 'The password is too weak.');
-                        } else if (e.code == 'email-already-in-use') {
-                          showSnackBar(
-                            context,
-                            'The account already exists for that email.',
-                          );
-                        } else if (e.code == 'invalid-email') {
-                          showSnackBar(
-                            context,
-                            'The email address is badly formatted.',
-                          );
-                        } else {
-                          showSnackBar(context, 'Error: ${e.message}');
-                        }
-                      } catch (e) {
-                        showSnackBar(context, 'Error: $e');
-                      }
-                      isLoading = false;
-                      setState(() {});
+                      await _handleSignup();
                     } else {
                       showSnackBar(context, 'Please fill in all fields.');
                     }
@@ -112,12 +86,11 @@ class _SignupPageState extends State<SignupPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Don\'t have an account?',
+                      'Already have an account?',
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Navigate to the signup page
                         Navigator.pop(context);
                       },
                       child: Text(
@@ -139,6 +112,47 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
+  Future<void> _handleSignup() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      await signupUser();
+      if (mounted) {
+        // Navigate to next screen or show success message
+        Navigator.pop(context);
+        showSnackBar(context, 'Account created successfully!');
+        Navigator.pushNamed(context,HomePage.id);
+
+      }
+    } on FirebaseAuthException catch (e) {
+      if (mounted) {
+        String message;
+        if (e.code == 'weak-password') {
+          message = 'The password is too weak.';
+        } else if (e.code == 'email-already-in-use') {
+          message = 'The account already exists for that email.';
+        } else if (e.code == 'invalid-email') {
+          message = 'The email address is badly formatted.';
+        } else {
+          message = 'Error: ${e.message}';
+        }
+        showSnackBar(context, message);
+      }
+    } catch (e) {
+      if (mounted) {
+        showSnackBar(context, 'Error: $e');
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+  }
+
   void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(
       context,
@@ -148,5 +162,6 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> signupUser() async {
     UserCredential user = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email!, password: password!);
+    print('Signed up user: ${user.user?.uid}');
   }
 }

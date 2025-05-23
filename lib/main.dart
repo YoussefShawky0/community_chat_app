@@ -1,5 +1,6 @@
 import 'package:chat_app/constants.dart';
 import 'package:chat_app/firebase_options.dart';
+import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/pages/login_page.dart';
 import 'package:chat_app/pages/signup_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,6 +21,7 @@ class ChatApp extends StatelessWidget {
       routes: {
         LoginPage.id: (context) => LoginPage(),
         SignupPage.id: (context) => SignupPage(),
+        HomePage.id: (context) => HomePage(),
       },
       initialRoute: LoginPage.id,
       debugShowCheckedModeBanner: false,
