@@ -123,7 +123,7 @@ class _SignupPageState extends State<SignupPage> {
         // Navigate to next screen or show success message
         Navigator.pop(context);
         showSnackBar(context, 'Account created successfully!');
-        Navigator.pushNamed(context,HomePage.id);
+        Navigator.pushNamed(context,HomePage.id, arguments: email);
 
       }
     } on FirebaseAuthException catch (e) {

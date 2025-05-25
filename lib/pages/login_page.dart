@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
       await loginUser();
       if (mounted) {
         // Navigate to next screen or show success message
-        Navigator.pushNamed(context, HomePage.id);
+        Navigator.pushNamed(context, HomePage.id, arguments: email);
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
