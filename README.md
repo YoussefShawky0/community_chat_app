@@ -14,10 +14,6 @@
 |------------------------|------------------------|---------------------|
 | ![](assets/images/screenshots/Second_user.png) | ![](assets/images/screenshots/3rd_user.png) | ![](assets/images/screenshots/Logout.png) |
 
-| Confirm Password |
-|------------------|
-| ![](assets/images/screenshots/Confirm_pass.png) |
-
 ---
 
 ## ✨ Features
