@@ -34,7 +34,7 @@ class _SignupPageState extends State<SignupPage> {
             child: ListView(
               children: [
                 Image.asset(
-                  'assets/images/scholar.png',
+                  kLogo,
                   width: 200,
                   height: 200,
                   fit: BoxFit.fitHeight,
@@ -43,7 +43,7 @@ class _SignupPageState extends State<SignupPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Scholar Chat',
+                      'Community Chat',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 30,
@@ -123,8 +123,7 @@ class _SignupPageState extends State<SignupPage> {
         // Navigate to next screen or show success message
         Navigator.pop(context);
         showSnackBar(context, 'Account created successfully!');
-        Navigator.pushNamed(context,HomePage.id, arguments: email);
-
+        Navigator.pushNamed(context, HomePage.id, arguments: email);
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {

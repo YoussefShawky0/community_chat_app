@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
             child: ListView(
               children: [
                 Image.asset(
-                  'assets/images/scholar.png',
+                  kLogo,
                   height: 200,
                   fit: BoxFit.fitHeight,
                 ),
@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Scholar Chat',
+                      'Community Chat',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 30,

@@ -47,7 +47,7 @@ class _SendMessageBoxState extends State<SendMessageBox> {
           hintText: 'Type a message...',
           hintStyle: const TextStyle(color: kPrimaryColor, fontSize: 16),
           filled: true,
-          fillColor: kBackgroundColor,
+          fillColor: kSendBoxColor,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,

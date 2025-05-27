@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 const Color kPrimaryColor = Color(0xFF314f6a);
-const Color kBackgroundColor = Color(0xffE7E7ED);
-const kLogo = 'assets/images/scholar.png';
+const Color kBackgroundColor = Color(0xFFE7E7ED);
+const Color kSendBoxColor = Color(0xFFE7E7ED);
+const kLogo = 'assets/images/Logo.png';
 const kBackgroundImage = 'assets/images/BackgroundPattern.jpg';
 const kMessagesCollection = 'messages';
 const kMessage = 'message';

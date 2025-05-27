@@ -52,26 +52,28 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.white,
             appBar: AppBar(
               elevation: 0,
+              foregroundColor: Colors.white,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(5),
                   bottomRight: Radius.circular(5),
                 ),
               ),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(kLogo, width: 30, height: 30),
-                  const SizedBox(width: 10),
-                  const Text(
-                    'Scholar Chat',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Pacifico',
-                      color: Colors.white,
+              title: Center(
+                child: Row(
+                  children: [
+                    Image.asset(kLogo, width: 50, height: 50),
+                    const SizedBox(width: 5),
+                    const Text(
+                      'Community Chat',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: 'Pacifico',
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               centerTitle: true,
               backgroundColor: kPrimaryColor,
@@ -105,7 +107,10 @@ class _HomePageState extends State<HomePage> {
                               backGroundColor: kPrimaryColor,
                               child: Text(
                                 messageList[index].message,
-                                style: const TextStyle(color: Colors.white),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
                               ),
                             );
                           } else {
@@ -118,7 +123,10 @@ class _HomePageState extends State<HomePage> {
                               backGroundColor: kBackgroundColor,
                               child: Text(
                                 messageList[index].message,
-                                style: const TextStyle(color: Colors.black),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
                                 textDirection: TextDirection.ltr,
                               ),
                             );
@@ -131,6 +139,7 @@ class _HomePageState extends State<HomePage> {
                       onMessageSent: _scrollToLatestMessage,
                       email: email ?? '',
                     ),
+                    const SizedBox(height: 15),
                   ],
                 ),
               ],
