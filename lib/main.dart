@@ -1,14 +1,16 @@
-import 'package:chat_app/constants.dart';
 import 'package:chat_app/firebase_options.dart';
 import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/pages/login_page.dart';
 import 'package:chat_app/pages/signup_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FlutterNativeSplash.remove(); // إزالة السبلاتش بعد التهيئة
   runApp(const ChatApp());
 }
 
@@ -25,7 +27,6 @@ class ChatApp extends StatelessWidget {
       },
       initialRoute: LoginPage.id,
       debugShowCheckedModeBanner: false,
-      home: const Scaffold(backgroundColor: kPrimaryColor),
     );
   }
 }
