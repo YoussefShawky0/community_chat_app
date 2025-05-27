@@ -16,10 +16,20 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  String? email;
-  String? password;
   bool isLoading = false;
   GlobalKey<FormState> formKey = GlobalKey();
+
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    confirmController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,19 +66,40 @@ class _SignupPageState extends State<SignupPage> {
                 InfoTitle(title: 'Create Account'),
                 const SizedBox(height: 15),
                 CustomFormTextField(
+                  controller: emailController,
                   hintText: 'Enter your email',
                   labelText: 'Email',
                   onChanged: (value) {
-                    email = value;
+                    // Optional: Trigger validation on change
+                    if (formKey.currentState != null) {
+                      formKey.currentState!.validate();
+                    }
                   },
                 ),
                 const SizedBox(height: 20),
                 CustomFormTextField(
+                  controller: passwordController,
                   hintText: 'Create password',
                   labelText: 'Password',
                   onChanged: (value) {
-                    password = value;
+                    // Trigger validation for confirm password field when password changes
+                    if (formKey.currentState != null) {
+                      formKey.currentState!.validate();
+                    }
                   },
+                ),
+                const SizedBox(height: 20),
+                CustomFormTextField(
+                  controller: confirmController,
+                  hintText: 'Confirm password',
+                  labelText: 'Confirm Password',
+                  onChanged: (value) {
+                    // Optional: Trigger validation on change
+                    if (formKey.currentState != null) {
+                      formKey.currentState!.validate();
+                    }
+                  },
+                  originalPasswordController: passwordController,
                 ),
                 const SizedBox(height: 30),
                 CustomButton(
@@ -77,7 +108,7 @@ class _SignupPageState extends State<SignupPage> {
                     if (formKey.currentState!.validate()) {
                       await _handleSignup();
                     } else {
-                      showSnackBar(context, 'Please fill in all fields.');
+                      showSnackBar(context, 'Please correct the errors above.');
                     }
                   },
                 ),
@@ -118,24 +149,39 @@ class _SignupPageState extends State<SignupPage> {
     });
 
     try {
-      await signupUser();
+      // Use controller values directly
+      final email = emailController.text.trim();
+      final password = passwordController.text;
+      
+      await signupUser(email, password);
+      
       if (mounted) {
-        // Navigate to next screen or show success message
         Navigator.pop(context);
         showSnackBar(context, 'Account created successfully!');
-        Navigator.pushNamed(context, HomePage.id, arguments: email);
+        Navigator.pushNamed(
+          context,
+          HomePage.id,
+          arguments: email,
+        );
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
         String message;
-        if (e.code == 'weak-password') {
-          message = 'The password is too weak.';
-        } else if (e.code == 'email-already-in-use') {
-          message = 'The account already exists for that email.';
-        } else if (e.code == 'invalid-email') {
-          message = 'The email address is badly formatted.';
-        } else {
-          message = 'Error: ${e.message}';
+        switch (e.code) {
+          case 'weak-password':
+            message = 'The password is too weak.';
+            break;
+          case 'email-already-in-use':
+            message = 'The account already exists for that email.';
+            break;
+          case 'invalid-email':
+            message = 'The email address is badly formatted.';
+            break;
+          case 'operation-not-allowed':
+            message = 'Email/password accounts are not enabled.';
+            break;
+          default:
+            message = 'Error: ${e.message}';
         }
         showSnackBar(context, message);
       }
@@ -153,14 +199,18 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   void showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+      ),
+    );
   }
 
-  Future<void> signupUser() async {
-    UserCredential user = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email!, password: password!);
-    print('Signed up user: ${user.user?.uid}');
+  Future<void> signupUser(String email, String password) async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
   }
 }

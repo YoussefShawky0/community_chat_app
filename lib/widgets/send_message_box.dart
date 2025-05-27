@@ -37,6 +37,7 @@ class _SendMessageBoxState extends State<SendMessageBox> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        style: const TextStyle(color: Colors.black, fontSize: 16),
         controller: _controller,
         onSubmitted: (_) => _sendMessage(),
         decoration: InputDecoration(
@@ -50,11 +51,11 @@ class _SendMessageBoxState extends State<SendMessageBox> {
           fillColor: kSendBoxColor,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide.none,
+            borderSide: BorderSide(color: Colors.transparent),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: kPrimaryColor),
+            borderSide: BorderSide(color: Colors.transparent),
           ),
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         ),

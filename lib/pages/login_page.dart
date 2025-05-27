@@ -35,11 +35,7 @@ class _LoginPageState extends State<LoginPage> {
             key: formKey,
             child: ListView(
               children: [
-                Image.asset(
-                  kLogo,
-                  height: 200,
-                  fit: BoxFit.fitHeight,
-                ),
+                Image.asset(kLogo, height: 200, fit: BoxFit.fitHeight),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -151,8 +147,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> loginUser() async {
-    UserCredential user = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email!, password: password!);
-    print('Logged in user: ${user.user?.uid}');
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email!,
+      password: password!,
+    );
   }
 }
