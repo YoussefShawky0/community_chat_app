@@ -10,7 +10,7 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  FlutterNativeSplash.remove(); // إزالة السبلاتش بعد التهيئة
+  FlutterNativeSplash.remove();
   runApp(const ChatApp());
 }
 

@@ -70,7 +70,6 @@ class _SignupPageState extends State<SignupPage> {
                   hintText: 'Enter your email',
                   labelText: 'Email',
                   onChanged: (value) {
-                    // Optional: Trigger validation on change
                     if (formKey.currentState != null) {
                       formKey.currentState!.validate();
                     }
@@ -94,7 +93,6 @@ class _SignupPageState extends State<SignupPage> {
                   hintText: 'Confirm password',
                   labelText: 'Confirm Password',
                   onChanged: (value) {
-                    // Optional: Trigger validation on change
                     if (formKey.currentState != null) {
                       formKey.currentState!.validate();
                     }

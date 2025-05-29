@@ -159,7 +159,6 @@ class _HomePageState extends State<HomePage> {
 
           return Stack(
             children: [
-              // الخلفية
               Positioned.fill(
                 child: Image.asset(
                   kBackgroundImage,
@@ -171,7 +170,6 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
-              // المحتوى الرئيسي
               Column(
                 children: [
                   Expanded(
